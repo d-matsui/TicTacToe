@@ -8,63 +8,74 @@ import {
 } from 'react-native';
 
 class Square extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: "",
-    }
-  }
-
   render() {
     return (
       <Button
-        onPress={() => this.setState({value: "X"})}
-        title={this.state.value}
+        onPress={() => {
+          this.props.onClick();
+        }}
+        title={this.props.value}
       />
     )
   }
 }
 
 class Board extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(""),
+    };
+  }
+
   renderSquare(i) {
-    return <Square value={i} />;
+    return <Square
+             value={this.state.squares[i]}
+             onClick={() => this.handleClick(i)}
+           />;
+  }
+
+  handleClick(i) {
+    const squares = this.state.squares;
+    squares[i] = "X";
+    this.setState({squares: squares});
   }
 
   render() {
-    const status = 'Next player: X';
+    const status = "Next player: X";
     return (
       <View style={styles.container}>
         <View style={styles.row}>
           <View style={styles.square}>
-            { this.renderSquare("0") }
+            { this.renderSquare(0) }
           </View>
           <View style={styles.square}>
-            { this.renderSquare("1") }
+            { this.renderSquare(1) }
           </View>
           <View style={styles.square}>
-            { this.renderSquare("2") }
-          </View>
-        </View>
-        <View style={styles.row}>
-          <View style={styles.square}>
-            { this.renderSquare("3") }
-          </View>
-          <View style={styles.square}>
-            { this.renderSquare("4") }
-          </View>
-          <View style={styles.square}>
-            { this.renderSquare("5") }
+            { this.renderSquare(2) }
           </View>
         </View>
         <View style={styles.row}>
           <View style={styles.square}>
-            { this.renderSquare("6") }
+            { this.renderSquare(3) }
           </View>
           <View style={styles.square}>
-            { this.renderSquare("7") }
+            { this.renderSquare(4) }
           </View>
           <View style={styles.square}>
-            { this.renderSquare("8") }
+            { this.renderSquare(5) }
+          </View>
+        </View>
+        <View style={styles.row}>
+          <View style={styles.square}>
+            { this.renderSquare(6) }
+          </View>
+          <View style={styles.square}>
+            { this.renderSquare(7) }
+          </View>
+          <View style={styles.square}>
+            { this.renderSquare(8) }
           </View>
         </View>
       </View>
