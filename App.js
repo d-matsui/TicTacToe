@@ -1,114 +1,97 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React from 'react';
+import React, { Component } from 'react';
 import {
-  SafeAreaView,
+  Button,
+  FlatList,
   StyleSheet,
-  ScrollView,
   View,
   Text,
-  StatusBar,
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+class Square extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: "",
+    }
+  }
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
+  render() {
+    return (
+      <Button
+        onPress={() => this.setState({value: "X"})}
+        title={this.state.value}
+      />
+    )
+  }
+}
+
+class Board extends Component {
+  renderSquare(i) {
+    return <Square value={i} />;
+  }
+
+  render() {
+    const status = 'Next player: X';
+    return (
+      <View style={styles.container}>
+        <View style={styles.row}>
+          <View style={styles.square}>
+            { this.renderSquare("0") }
           </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+          <View style={styles.square}>
+            { this.renderSquare("1") }
+          </View>
+          <View style={styles.square}>
+            { this.renderSquare("2") }
+          </View>
+        </View>
+        <View style={styles.row}>
+          <View style={styles.square}>
+            { this.renderSquare("3") }
+          </View>
+          <View style={styles.square}>
+            { this.renderSquare("4") }
+          </View>
+          <View style={styles.square}>
+            { this.renderSquare("5") }
+          </View>
+        </View>
+        <View style={styles.row}>
+          <View style={styles.square}>
+            { this.renderSquare("6") }
+          </View>
+          <View style={styles.square}>
+            { this.renderSquare("7") }
+          </View>
+          <View style={styles.square}>
+            { this.renderSquare("8") }
+          </View>
+        </View>
+      </View>
+    )
+  }
+}
+
+export default class Game extends Component {
+  render() {
+    return (
+      <View>
+        <Board />
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  container: {
+    margin: 100,
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  row: {
+    flexDirection: 'row',
   },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
-
-export default App;
+  square: {
+    width: 50,
+    height: 50,
+    margin: 10,
+  }
+})
