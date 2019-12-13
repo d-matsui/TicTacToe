@@ -28,7 +28,7 @@ class Board extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <View style={styles.row}>
           <View style={styles.square}>
             { this.renderSquare(0) }
@@ -122,8 +122,10 @@ export default class Game extends Component {
             "Go to game start";
       return (
         <Button
+          key={move}
           onPress={() => this.jumpTo(move)}
           title={desc}
+          color="green"
         />
       );
     })
@@ -136,13 +138,15 @@ export default class Game extends Component {
     }
 
     return (
-      <View>
+      <View style={styles.container}>
         <Text style={styles.state}>{status}</Text>
         <Board
           onClick={i => this.handleClick(i)}
           squares={current.squares}
         />
-        {moves}
+        <View style={styles.moves}>
+          {moves}
+        </View>
       </View>
     );
   }
@@ -150,19 +154,27 @@ export default class Game extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 100,
+    flex: 1,
+    margin: 10,
+    marginVertical: 10,
   },
   row: {
-    flexDirection: 'row',
+    flexDirection: "row",
+    justifyContent: "center",
+    margin: 0,
   },
   square: {
     width: 50,
     height: 50,
-    margin: 10,
+    padding: 5,
   },
   state: {
+    marginVertical: 30,
     fontWeight: "bold",
     fontSize: 30,
+  },
+  moves: {
+    marginVertical: 20,
   }
 })
 
